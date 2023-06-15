@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Kontructo.Models.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="panel" style="width:100%">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-6">
+                <h3>Product List</h3>
+            </div>
+            <div class="col-6 text-right">
+                <a class="btn btn-info" asp-action="CreateProduct"> Add New</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped border" id="ulist" style="width:100%">
+            <thead>
+                <tr>
+                    <td class="text-center">Id</td>
+                    <td class="text-center">Name</td>
+                    <td class="text-center">Tag</td>
+                    <td class="text-center">Actions</td>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@Html.DisplayFor(ad => item.Id)</td>
+                    <td class="text-center">@Html.DisplayFor(ad => item.Name)</td>
+                    <td class="text-center">@Html.DisplayFor(ad => item.ProductType.Tag)</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+
+                            <a type="button" class="btn btn-primary rounded-0" asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Url"><i class="far fa-eye"></i></a>
+                            <a type="button" class="btn btn-success rounded-0" asp-action="EditProduct" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
+                            <form method="post" action="Delete">
+                                <button onclick="if (!confirm('Are you sure you want to delete this Item?')) { return false }" type="submit" class="btn btn-danger rounded-0 " asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        <p class="box-title">Total products till @String.Format("{0:dddd, MMMM d, yyyy}", DateTime.Now) : @Model.Count()</p>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#ulist').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+        });
+    </script>
+}

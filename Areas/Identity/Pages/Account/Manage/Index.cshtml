@@ -1,0 +1,111 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<form id="profile-form" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Avatar" style="width: 100%;"></label>
+                @if (Model.Input.Avatar != null)
+                {
+                    <img id="userImage" style="width:100%;height:100%; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.Avatar))">
+                }
+                else
+                {
+                    <img id="userImage" style="width:100%;height:100%; object-fit:cover" src="~/images/placeholder.png">
+                }
+                <input type="file"
+                       accept=".png,.jpg,.jpeg,.gif,.tif"
+                       asp-for="Input.Avatar"
+                       class="form-control"
+                       style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+                       onchange="document.getElementById('userImage').src = window.URL.createObjectURL(this.files[0])" id="uimage" disabled />
+                <span asp-validation-for="Input.Avatar" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input id="name" asp-for="Input.Name" class="form-control" disabled />
+                <label asp-for="Input.Name" class="form-label"></label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input id="Address" asp-for="Input.Address" class="form-control"  disabled/>
+                <label asp-for="Input.Address" class="form-label"></label>
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input id="Phonenumber" asp-for="Input.PhoneNumber" class="form-control" disabled />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input id="DOB" asp-for="Input.DOB" class="form-control" disabled />
+                <label asp-for="Input.DOB" class="form-label"></label>
+                <span asp-validation-for="Input.DOB" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input id="Occupation" asp-for="Input.Occupation" class="form-control" disabled />
+                <label asp-for="Input.Occupation" class="form-label"></label>
+                <span asp-validation-for="Input.Occupation" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select id="gender" asp-for="Input.Gender" class="form-control text-center"  disabled>
+                    <option></option>
+                    <option value="Male">Male</option>
+                    <option  value="Female">Female</option>
+                </select>
+                <label asp-for="Input.Gender" class="form-label"></label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-success" style="display: none;">Save</button>
+            <button id="edit" type="button" class="btn btn-primary">Edit</button>
+            <button id="cancel" type="button" class="btn btn-danger" style="display: none;">Cancel</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function(){
+            $("#edit").click(function(){
+                $("#edit").hide()
+                $("#cancel").show()
+                $("#update-profile-button").show()
+                $("#gender").removeAttr("disabled")
+                $("#Phonenumber").removeAttr("disabled")
+                $("#DOB").removeAttr("disabled")
+                $("#Occupation").removeAttr("disabled")
+                $("#name").removeAttr("disabled")
+                $("#uimage").removeAttr("disabled")
+                $("#Address").removeAttr("disabled")
+            });
+            $("#cancel").click(function(){
+                $("#edit").show()
+                $("#cancel").hide()
+                $("#update-profile-button").hide()
+                $("#gender").attr("disabled","disabled")
+                $("#Phonenumber").attr("disabled","disabled")
+                $("#DOB").attr("disabled","disabled")
+                $("#Occupation").attr("disabled","disabled")
+                $("#name").attr("disabled","disabled")
+                $("#uimage").attr("disabled","disabled")                
+                $("#Address").attr("disabled","disabled")
+            });
+        });
+    </script>
+}

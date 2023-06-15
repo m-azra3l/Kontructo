@@ -1,0 +1,25 @@
+﻿@using Kontructo.Models
+@using Kontructo.Logic
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Admin</h1>
+    <ul class="nav nav-pills flex-column">
+        @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.SuperAdmin) || User.IsInRole(Roles.Master))
+        {
+            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserProductList">Product List</a></li>
+        }
+        @if (User.IsInRole(Roles.Master))
+        {
+            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="MasterProductList">Master Product List</a></li>
+            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="TagList">Product Categories</a></li>
+            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UsersList">Users List</a></li>
+            <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="UserRoles">User Roles</a></li>
+        }
+    </ul>
+
+</div>

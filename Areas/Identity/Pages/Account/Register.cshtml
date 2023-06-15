@@ -1,0 +1,90 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Input.Name" class="form-control" aria-required="true" />
+                <label asp-for="Input.Name"></label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.DOB" class="form-control" aria-required="true" />
+                <label asp-for="Input.DOB"></label>
+                <span asp-validation-for="Input.DOB" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.UserName" class="form-control" aria-required="true" />
+                <label asp-for="Input.UserName"></label>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Avatar" class="form-control" type="file" name="Avatar" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" aria-required="true" />
+                <label asp-for="Input.Avatar">Image (Optional,512kb max)</label>
+                <span asp-validation-for="Input.Avatar" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select asp-for="Input.Gender" class="form-control text-center">
+                    <option></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <label asp-for="Input.Gender" class="form-label"></label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Address" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Address"></label>
+                <span asp-validation-for="Input.Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </div>
+        <div class="col-md-6">
+            <label>Role (Optional)</label>
+            <label asp-for="Input.IsMaster">
+                <input type="checkbox" id="check1" asp-for="Input.IsMaster" /> Master
+            </label>
+            <label asp-for="Input.IsSuperAdmin">
+                <input type="checkbox" id="check4" asp-for="Input.IsSuperAdmin" /> Super Admin
+            </label>
+            <label asp-for="Input.IsAdmin">
+                <input type="checkbox" id="check2" asp-for="Input.IsAdmin" /> Admin
+            </label>
+            <label asp-for="Input.IsMember">
+                <input type="checkbox" id="check3" asp-for="Input.IsMember" /> Member
+            </label>
+            <br />
+        </div>
+
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

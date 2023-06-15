@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using Kontructo.Logic
+
+@inject UserManager<AppUser> UserManager
+
+@model Kontructo.Models.Product
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="wrapper">
+    <div class="list-heading">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="mb-0">@Model.Name</h2>
+            </div>
+            <div class="col-6 text-right">
+                @if (User.IsInRole(Roles.SuperAdmin) || User.IsInRole(Roles.Admin))
+                {
+                    @if (UserManager.GetUserAsync(User).Result.UserName == Model.Vendor)
+                    {
+                        <a type="button" class="btn btn-primary" asp-controller="Admin"  asp-action="EditProduct" asp-route-id="@Model.Id">Edit</a>
+                    }
+                }
+                else if (User.IsInRole(Roles.Master))
+                {
+                    <a type="button" class="btn btn-primary" asp-controller="Admin"  asp-action="EditProduct" asp-route-id="@Model.Id">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="generic-image-container shadow-sm mb-3 mb-md-0 mx-auto">
+                    @if (Model.ProductImage != null)
+                    {
+                            <img src="data:image/*;base64,@(Convert.ToBase64String(Model.ProductImage))" alt="@Model.Name">
+                    }
+                    else
+                    {
+                            <img src="~/images/placeholder.png" alt="@Model.Name">
+                    }
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="generic-details-container">
+                    
+                    <div class="uploader"><span class="font-weight-bold">Vendor: @Model.Vendor</span></div>
+                    
+                    <div class="license">
+                        <span class="font-weight-bold">Price: &#8358 @Model.Price</span><br/>
+                    </div>  
+                    <div class="">
+                        <span class="font-weight-bold">Category: @Model.ProductType.Tag</span><br />
+                    </div>
+
+                    <h5 class="mt-1">Description</h5>
+                    <div class="description wrapper">
+                        @Model.Description
+                    </div>
+                </div> 
+            </div>          
+        </div>
+    </div>
+</div>

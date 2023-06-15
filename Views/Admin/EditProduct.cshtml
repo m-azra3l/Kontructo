@@ -1,0 +1,39 @@
+﻿@model Kontructo.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+<h3>Edit Product</h3>
+<form method="post" enctype="multipart/form-data" asp-action="EditPost">
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label>Type Binder</label>
+            <select asp-for="ProductTypeId" asp-items="ViewBag.ProductTypeId" class="form-control text-center" id="typebinder"><option value="">-- Select Tag --</option></select>
+            <span asp-validation-for="ProductTypeId" class="text-danger"></span>
+            <br />
+            <label>Name</label>
+            <Input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <br />
+            <label>Url</label>
+            <Input asp-for="Url" class="form-control" />
+            <span asp-validation-for="Url" class="text-danger"></span>
+            <label>Price</label>
+            <Input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+            <br />
+            <label>Image(less than 512kb</label>
+            <img style="width:100%;height:100%; object-fit:cover" src="@ViewBag.ImageDataUrl" />
+            <input type="file" name="ImageUrl" id="fileUpload" accept=".png,.jpg,.jpeg,.gif,.tif" class="form-control" />
+            <br />
+            <label>Description</label>
+            <textarea asp-for="Description" rows="20"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+            <br />
+            <input type="submit" class="btn btn-success" value="Edit" />
+            <input type="button" value="Back" onclick="window.history.back();" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

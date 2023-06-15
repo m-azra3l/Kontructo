@@ -1,0 +1,50 @@
+﻿@using Kontructo.Models
+@using Kontructo.ViewModels
+@model List<Kontructo.ViewModels.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "User Roles";
+}
+<div class="panel" style="width:100%">
+    <div class="panel-heading">
+        <h3 class="box-title">User Roles</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped border" id="usersroles" style="width:100%">
+            <thead>
+                <tr>
+                    <td class="text-center">Username</td>
+                    <td class="text-center">Roles</td>
+                    <td class="text-center">Action</td>
+                </tr>
+            </thead>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="text-center">@user.UserName</td>
+                    <td class="text-center">@string.Join(" , ", user.Roles.ToList())</td>
+                    <td class="text-center">
+                        <a class="btn btn-success rounded-0" asp-controller="Admin" asp-action="ManageRoles" asp-route-userId="@user.UserId"><i class="far fa-edit"></i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        <p class="box-title">Total users till @String.Format("{0:dddd, MMMM d, yyyy}", DateTime.Now) : @Model.Count()</p>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#usersroles').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+        });
+    </script>
+}

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Kontructo.Models.ProductType>
+
+@{
+    ViewData["Title"] = "Tag List";
+}
+
+
+<div class="row">
+    <div class="col-6">
+        <h3>Tag List</h3>
+    </div>
+    <div class="col-6 text-right">
+        <a class="btn btn-info" asp-action="CreateTag">Add Tag</a>        
+    </div>
+    <br />
+    <div class="col-12">
+        <table class="table table-striped border" >
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(pt => pt.Tag)
+                </th>
+                <th class="text-center">
+                    Actions
+                </th>
+            </tr>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@Html.DisplayFor(pt => item.Id)</td>
+                    <td class="text-center">
+                        @Html.DisplayFor(pt => item.Tag)
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a type="button" class="btn btn-success rounded-0"  asp-action="EditTag" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
+                            <form method="post" action="DeleteTag">
+                                <button onclick="if (!confirm('Are you sure you want to delete this Item?')) { return false }" type="submit" class="btn btn-danger rounded-0 " asp-action="DeleteTag" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </td>                   
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
